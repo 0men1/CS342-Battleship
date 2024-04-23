@@ -1,12 +1,16 @@
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import scenes.BattleshipScene;
-import scenes.Home;
+import scenes.ServerHome;
+import scenes.Message;
+import scenes.Server;
 
 import java.util.HashMap;
 
 public class Main  extends Application {
+    Server serverConnection;
+
     public static void main(String[] args) {
         System.out.println("Launching Server");
         launch(args);
@@ -18,7 +22,14 @@ public class Main  extends Application {
     @Override
     public void start(Stage stage) {
         HashMap<String, BattleshipScene> all_scenes = new HashMap<>();
-        Home home_scene = new Home(stage, all_scenes);
+        ServerHome home_scene = new ServerHome(stage, all_scenes);
+
+        serverConnection = new Server(data -> {
+            Platform.runLater(() -> {
+                Message msg = (Message) data;
+                home_scene.handleMessage(msg);
+            });
+        });
 
         try {
             all_scenes.get("Home").render();
