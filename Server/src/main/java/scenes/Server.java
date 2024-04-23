@@ -11,10 +11,13 @@ import java.util.function.Consumer;
 public class Server {
     private Consumer<Serializable> callback;
     int count = 1;
+    TheServer server;
 
     ArrayList<ClientThread> clients = new ArrayList<>();
     public Server(Consumer<Serializable> callback_) {
         callback = callback_;
+        server = new TheServer();
+        server.start();
     }
 
     public class TheServer extends Thread {

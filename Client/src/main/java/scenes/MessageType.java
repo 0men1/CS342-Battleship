@@ -1,5 +1,5 @@
 package scenes;
 
 public enum MessageType {
-    Update
+    Log
 }

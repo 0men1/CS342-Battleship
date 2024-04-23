@@ -1,4 +1,8 @@
 Main.class
-scenes/BattleshipScene.class
 scenes/Game.class
+Main$Client.class
+scenes/BattleshipScene.class
+scenes/Message.class
+scenes/MessageType.class
+Main$1.class
 scenes/Home.class

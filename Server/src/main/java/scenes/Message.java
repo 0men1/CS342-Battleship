@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Message implements Serializable {
     static final long serialVersionUID = 42L;
-    HashMap<String, Object> payload;
+    HashMap<String, Object> payload = new HashMap<>();
     MessageType msgType;
     public Message() {}
 

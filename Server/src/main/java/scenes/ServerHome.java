@@ -1,44 +1,51 @@
 package scenes;
 
-import com.sun.security.ntlm.Server;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
-public class ServerHome implements BattleshipScene {
+public class ServerHome implements BattleshipScene, Initializable {
     Stage stage;
-    BorderPane home_pane = new BorderPane();
-    Button home_button = new Button("Home");
-    HashMap<String, BattleshipScene> scenes = new HashMap<>();
-    Scene home = new Scene(home_pane, 300, 300);
-    ListView<String> updates = new ListView<>();
+    HashMap<String, BattleshipScene> scenes;
+    Scene home;
 
-    Server serverConnection;
 
-    public ServerHome(Stage stage, HashMap<String, BattleshipScene> scenes) {
+    @FXML
+    private ListView<String> updates;
+
+    @FXML
+    private Button closeButton;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // TODO Auto-generated method stub
+    }
+
+    public ServerHome(Scene myScene, Stage stage, HashMap<String, BattleshipScene> scenes) {
         this.stage = stage;
         this.scenes = scenes;
-        create();
+        home = myScene;
     }
 
 
+    @Override
     public void handleMessage(Message msg) {
         updates.getItems().add(msg.payload.get("Content").toString());
     }
 
-    void create() {
-        home_pane.setTop(updates);
-        home_pane.setCenter(home_button);
-        Scene home = new Scene(home_pane, 300, 300);
-        scenes.put("Home", this);
-    }
 
     @Override
     public void render() {
         stage.setScene(home);
         stage.setTitle("Home");
     }
+
 }
