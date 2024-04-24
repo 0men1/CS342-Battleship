@@ -1,8 +1,6 @@
 package controllers;
-
-import javafx.application.Platform;
 import messages.Message;
-
+import gamebackend.Board;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -51,7 +49,7 @@ public class Server {
         private ObjectOutputStream out;
         int count;
 
-
+        Board gameBoard = new Board();
 
         public Player(Socket socket, int count_) {
             this.connection = socket;
