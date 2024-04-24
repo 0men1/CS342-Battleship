@@ -1,6 +1,6 @@
-/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/scenes/ServerHome.java
-/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/scenes/Message.java
+/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/controllers/ServerHome.java
+/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/messages/MessageType.java
 /Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/Main.java
-/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/scenes/Server.java
-/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/scenes/BattleshipScene.java
-/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/scenes/MessageType.java
+/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/controllers/GameStatus.java
+/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/controllers/Server.java
+/Users/HomenHoma/MyCodingProjects/class/cs342/CS342-Battleship/Server/src/main/java/messages/Message.java
