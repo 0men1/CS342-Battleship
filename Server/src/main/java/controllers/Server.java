@@ -1,4 +1,5 @@
 package controllers;
+import gamebackend.Ship;
 import messages.Message;
 import gamebackend.Board;
 import java.io.ObjectInputStream;
@@ -79,8 +80,16 @@ public class Server {
                                 callback.accept(m);
                                 break;
                             case Log:
-                                m.createLogMessage("Log Message received: " + msg.payload.get("Content").toString());
-                                callback.accept(m);
+                                callback.accept(m.createLogMessage("Log Message received: " + msg.payload.get("Content").toString()));
+                                break;
+                            case ShipPlacement:
+                                Ship ship = (Ship) msg.payload.get("Ship");
+                                int x = (int) msg.payload.get("X");
+                                int y = (int) msg.payload.get("Y");
+                                boolean status = gameBoard.placeShip(ship, x, y);
+                                msg.payload.put("Status", status);
+                                out.writeObject(msg);
+                                callback.accept(m.createLogMessage("Ship at coords: " + x + ", " + y));
                                 break;
                         }
                     }

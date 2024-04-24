@@ -4,19 +4,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import messages.Message;
+import network.Client;
+
 import java.util.HashMap;
 
 public class Home implements BattleshipScene{
     Stage stage;
     BorderPane home_pane = new BorderPane();
-    Button home_button = new Button("Home");
+    Button CoopButton = new Button("Co-Op");
+    Button AIButton = new Button("AI");
     HashMap<String, BattleshipScene> scenes;
     Scene home = new Scene(home_pane, 500, 500);
     ListView<String> list = new ListView<>();
     String curScene;
+    Client clientConnection;
 
 
-    public Home(Stage stage, HashMap<String, BattleshipScene> scenes) {
+    public Home(Stage stage, HashMap<String, BattleshipScene> scenes, Client clientConnection) {
         this.stage = stage;
         this.scenes = scenes;
         create();
@@ -30,10 +35,6 @@ public class Home implements BattleshipScene{
 
     void create() {
         home_pane.setTop(list);
-        home_pane.setCenter(home_button);
-        home_button.setOnAction(e -> {
-            scenes.get("Game").render();
-        });
     }
 
     @Override

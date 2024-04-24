@@ -1,6 +1,5 @@
 package messages;
 
-import controllers.GameStatus;
 import gamebackend.Ship;
 
 import java.io.Serializable;

@@ -1,9 +1,9 @@
 package gamebackend;
-
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class Board {
     Cell[][] board = new Cell[10][10];
+    ArrayList<Ship> ships = new ArrayList<>();
 
     public void initializeBoard() {
         for (int y = 0; y < 10; y++) {
@@ -29,6 +29,16 @@ public class Board {
         }
     }
 
+    public ArrayList<Ship> checkForDestroyedShips() {
+        ArrayList<Ship> toRet = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            if (ships.get(i).health == 0) {
+                toRet.add(ships.get(i));
+            }
+        }
+        return toRet;
+    }
+
 
     public boolean placeShip(Ship ship, int x, int y) {
         if (x > 10 || x < 0) {
@@ -46,6 +56,7 @@ public class Board {
                         board[i][y].ship = ship;
                     }
                 }
+                ships.add(ship);
                 return true;
             }
         }

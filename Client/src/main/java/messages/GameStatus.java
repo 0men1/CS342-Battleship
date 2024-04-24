@@ -1,4 +1,4 @@
-package controllers;
+package messages;
 
 public enum GameStatus {
     Home,

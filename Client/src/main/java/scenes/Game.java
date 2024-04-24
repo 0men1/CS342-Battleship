@@ -4,6 +4,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import messages.Message;
+
 import java.util.HashMap;
 
 public class Game implements BattleshipScene{

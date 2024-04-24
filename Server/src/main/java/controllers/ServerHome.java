@@ -23,8 +23,10 @@ public class ServerHome {
                 switch (m.msgType) {
                     case Log:
                         updateLog(m.payload.get("Content").toString());
+                        break;
                     case GameStatusUpdate:
                         updateLog("Game status has been updated to: " + m.payload.get("Status"));
+                        break;
                 }
             }
         });
