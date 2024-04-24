@@ -6,21 +6,22 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import messages.Message;
+import network.Client;
 
 import java.util.HashMap;
 
 public class InQueue implements BattleshipScene{
     BorderPane queuePane = new BorderPane();
     Button cancelButton = new Button("Cancel");
-    HashMap<String, BattleshipScene> allScenes;
     Stage mainStage;
     Label inqueueLabel = new Label("In queue...");
     Scene inqueueScene;
 
+    Client clientConnection;
 
-    public InQueue(Stage stage_, HashMap<String, BattleshipScene> allScenes_) {
+    public InQueue(Stage stage_, Client clientConnection_) {
         mainStage = stage_;
-        allScenes = allScenes_;
+        clientConnection = clientConnection_;
         initLayout();
     }
 

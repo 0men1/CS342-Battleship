@@ -14,16 +14,14 @@ public class Home implements BattleshipScene{
     BorderPane home_pane = new BorderPane();
     Button CoopButton = new Button("Co-Op");
     Button AIButton = new Button("AI");
-    HashMap<String, BattleshipScene> scenes;
     Scene home = new Scene(home_pane, 500, 500);
     ListView<String> list = new ListView<>();
-    String curScene;
     Client clientConnection;
 
 
-    public Home(Stage stage, HashMap<String, BattleshipScene> scenes, Client clientConnection) {
+    public Home(Stage stage, Client clientConnection_) {
         this.stage = stage;
-        this.scenes = scenes;
+        clientConnection = clientConnection_;
         create();
     }
 

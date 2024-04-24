@@ -5,6 +5,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import messages.Message;
+import network.Client;
 
 import java.util.HashMap;
 
@@ -12,14 +13,14 @@ public class Game implements BattleshipScene{
     Stage stage;
     BorderPane game_pane = new BorderPane();
     Button game_button = new Button("Game");
-    HashMap<String, BattleshipScene> scenes;
     Scene game = new Scene(game_pane, 500, 500);
     ListView<String> list = new ListView<>();
+    Client clientConnection;
 
-    public Game(Stage stage, HashMap<String, BattleshipScene> scenes) {
+    public Game(Stage stage, Client clientConnection_) {
         this.stage = stage;
-        this.scenes = scenes;
-        create();
+        clientConnection = clientConnection_;
+        initScene();
     }
 
 
@@ -29,13 +30,9 @@ public class Game implements BattleshipScene{
 
     }
 
-    void create() {
+    void initScene() {
         game_pane.setTop(list);
         game_pane.setCenter(game_button);
-
-        game_button.setOnAction(e -> {
-            scenes.get("Home").render();
-        });
     }
 
     @Override

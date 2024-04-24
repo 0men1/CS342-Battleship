@@ -1,11 +1,13 @@
 package network;
 
 import messages.Message;
+import scenes.BattleshipScene;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class Client extends Thread {
@@ -13,9 +15,15 @@ public class Client extends Thread {
     ObjectOutputStream out;
     ObjectInputStream in;
     private Consumer<Serializable> callback;
-    public Client(Consumer<Serializable> callback_){
+    HashMap<String, BattleshipScene> sceneMap;
+    String currentScene;
+
+    public Client(Consumer<Serializable> callback_, HashMap<String, BattleshipScene> sceneMap_){
         callback = callback_;
+        sceneMap = sceneMap_;
+        currentScene = "Home";
     }
+
     public void run() {
         try{
             socketClient = new Socket("127.0.0.1", 5555);

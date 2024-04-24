@@ -21,10 +21,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        all_scenes.put("Home", new Home(stage, all_scenes));
-        all_scenes.put("InQueue", new InQueue(stage, all_scenes));
-        all_scenes.put("PreGame", new PreGame(stage, all_scenes));
-        all_scenes.put("Game", new Game(stage, all_scenes));
 
         clientConnection = new Client(data -> {
             Platform.runLater(() -> {
@@ -34,9 +30,15 @@ public class Main extends Application {
                         all_scenes.get(currentScene).handleMessage(newMsg);
                 }
             });
-        });
+        }, all_scenes);
+
+        all_scenes.put("Home", new Home(stage, clientConnection));
+        all_scenes.put("InQueue", new InQueue(stage, clientConnection));
+        all_scenes.put("PreGame", new PreGame(stage, clientConnection));
+        all_scenes.put("Game", new Game(stage, clientConnection));
 
         clientConnection.start();
+
 
         try{
             all_scenes.get("Home").render();
