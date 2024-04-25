@@ -27,6 +27,11 @@ public class ServerHome {
                     case GameStatusUpdate:
                         updateLog("Game status has been updated to: " + m.payload.get("Status"));
                         break;
+                    case OpponentFound:
+                        updateLog("Opponents have been found!");
+                        break;
+                    case SendToShipPlacement:
+                        updateLog("Both opponents have accepted. Now sending to ship placement");
                 }
             }
         });

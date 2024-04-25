@@ -18,6 +18,12 @@ public class Message implements Serializable {
         return this;
     }
 
+    public Message createSceneSwitchMessage(String scene) {
+        msgType = MessageType.SceneSwitch;
+        payload.put("Scene", scene);
+        return this;
+    }
+
     public Message createStatusMessage(GameStatus status) {
         msgType = MessageType.GameStatusUpdate;
         payload.put("Status", status);

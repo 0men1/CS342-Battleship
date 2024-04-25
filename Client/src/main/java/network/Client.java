@@ -1,8 +1,10 @@
 package network;
 
 import messages.Message;
+import messages.MessageType;
 import scenes.BattleshipScene;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -14,13 +16,12 @@ public class Client extends Thread {
     Socket socketClient;
     ObjectOutputStream out;
     ObjectInputStream in;
-    private Consumer<Serializable> callback;
-    HashMap<String, BattleshipScene> sceneMap;
+    private final Consumer<Serializable> callback;
+    public HashMap<String, BattleshipScene> sceneMap;
     String currentScene;
 
-    public Client(Consumer<Serializable> callback_, HashMap<String, BattleshipScene> sceneMap_){
+    public Client(Consumer<Serializable> callback_){
         callback = callback_;
-        sceneMap = sceneMap_;
         currentScene = "Home";
     }
 
@@ -35,7 +36,25 @@ public class Client extends Thread {
         while (true) {
             try {
                 Message msg = (Message) in.readObject();
-                callback.accept(msg);
+                if (msg != null ) {
+                    Message m = new Message();
+                    switch(msg.msgType) {
+                        case StartQueue:
+                            if ((boolean) msg.payload.get("Request-Status")) {
+                                currentScene = "InQueue";
+                                m.msgType = MessageType.SceneSwitch;
+                                m.payload.put("Scene", "InQueue");
+                                callback.accept(m);
+                            }
+                            break;
+                        case OpponentFound:
+                            callback.accept(msg);
+
+                        case SendToShipPlacement:
+                            callback.accept(msg);
+                    }
+                }
+
             } catch (Exception e) {
                 System.out.println("Error getting message");
             }
@@ -47,8 +66,17 @@ public class Client extends Thread {
             out.writeObject(msg_);
         } catch (Exception e) {
             Message m = new Message();
-            m.createLogMessage("There was an error sending message: " + e);
-            callback.accept(m);
+            callback.accept(m.createLogMessage("There was an error sending message: " + e));
+        }
+    }
+
+    public void close() {
+        try {
+            if (!socketClient.isClosed()) {
+                socketClient.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error closing socket");
         }
     }
 }

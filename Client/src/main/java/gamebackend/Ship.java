@@ -1,8 +1,8 @@
 package gamebackend;
 
 public class Ship {
-    int size;
-    boolean isVert;
+    public int size;
+    public boolean isVert;
     int health;
 
     public Ship(boolean isVert_, int size_) {

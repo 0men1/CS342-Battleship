@@ -1,6 +1,7 @@
 gamebackend/Board.class
 controllers/Server$Player.class
 controllers/Server.class
+controllers/PlayerStatus.class
 controllers/Server$1.class
 gamebackend/Ship.class
 Main.class
