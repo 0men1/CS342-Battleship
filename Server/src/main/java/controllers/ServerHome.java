@@ -32,6 +32,8 @@ public class ServerHome {
                         break;
                     case SendToShipPlacement:
                         updateLog("Both opponents have accepted. Now sending to ship placement");
+                    case StartGame:
+                        updateLog("Match is starting!");
                 }
             }
         });

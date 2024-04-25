@@ -5,8 +5,10 @@ public enum MessageType {
     GameStatusUpdate,
     ShipPlacement,
     StartQueue,
+    QueueAccept,
     OpponentFound,
     SendToShipPlacement,
     SceneSwitch,
-    QueueAccept,
+    DonePlacingShips,
+    StartGame
 }

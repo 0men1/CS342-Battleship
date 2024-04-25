@@ -35,6 +35,7 @@ public class PreGame implements BattleshipScene{
     Button ship3 = new Button("Ship - 3");
     Button ship4 = new Button("Ship - 4");
     Button ship5 = new Button("Ship - 5");
+    Button readyButton = new Button("Ready");
     Ship selectedShip = null;
     Button selectedButton = null;
     VBox shipButtonsBox = new VBox(ship1, ship2, ship3, ship4, ship5);
@@ -87,10 +88,20 @@ public class PreGame implements BattleshipScene{
             shipOnHand.setText("Ship on hand: 4");
             selectedButton = ship4;
         });
+
         ship5.setOnAction(e -> {
             selectedShip = new Ship(true, 5);
             shipOnHand.setText("Ship on hand: 5");
             selectedButton = ship5;
+        });
+
+
+        readyButton.setOnAction(e -> {
+            Message newMsg = new Message();
+            newMsg.msgType = MessageType.DonePlacingShips;
+            cellGrid.setDisable(true);
+            readyButton.setDisable(true);
+            clientConnection.send(newMsg);
         });
 
 

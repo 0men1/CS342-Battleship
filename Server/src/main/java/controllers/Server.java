@@ -164,6 +164,16 @@ public class Server {
                                 msg.payload.put("Request-Status", req_status);
                                 out.writeObject(msg);
                                 break;
+
+                            case DonePlacingShips:
+                                playerStatus = PlayerStatus.DonePlacingShips;
+                                if (opponent.playerStatus == PlayerStatus.DonePlacingShips) {
+                                    m.msgType = MessageType.StartGame;
+                                    out.writeObject(m);
+                                    opponent.out.writeObject(m);
+                                    callback.accept(m);
+                                }
+                                break;
                         }
                     }
                 } catch (Exception e) {
