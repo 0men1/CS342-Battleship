@@ -5,10 +5,14 @@ public class Board {
     Cell[][] board = new Cell[10][10];
     ArrayList<Ship> ships = new ArrayList<>();
 
+    public Board() {
+        initializeBoard();
+    }
+
     public void initializeBoard() {
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
-                board[x][y] = new Cell(null);
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                board[y][x] = new Cell(null);
             }
         }
     }
@@ -21,8 +25,8 @@ public class Board {
             return false;
         }
 
-        if (board[x][y] != null) {
-            board[x][y].ship.hit();
+        if (board[y][x] != null) {
+            board[y][x].ship.hit();
             return true;
         } else {
             return false;
@@ -48,12 +52,12 @@ public class Board {
         } else {
             if (canPlaceShip(ship, x, y)) {
                 if (ship.isVert) {
-                    for (int i = y; i < (ship.size + y); i++) {
-                        board[x][i].ship = ship;
+                    for (int i = y; i < ((ship.size-1) + y); i++) {
+                        board[i][x].ship = ship;
                     }
                 } else {
-                    for (int i = x; i < (ship.size + x); i++) {
-                        board[i][y].ship = ship;
+                    for (int i = x; i < ((ship.size-1) + x); i++) {
+                        board[y][i].ship = ship;
                     }
                 }
                 ships.add(ship);
@@ -68,7 +72,8 @@ public class Board {
         if (ship.isVert) {
             if ((ship.size + y) - 1 < 10) {
                 for (int i = y; i < (ship.size + y); i++) {
-                    if (board[x][i].ship != null) {
+                    System.out.println(x + " " + i);
+                    if (board[i][x].ship != null) {
                         return false;
                     }
                 }
@@ -78,7 +83,7 @@ public class Board {
         } else {
             if ((ship.size + x) - 1 < 10) {
                 for (int i = x; i < (ship.size + x); i++) {
-                    if (board[i][y].ship != null) {
+                    if (board[y][i].ship != null) {
                         return false;
                     }
                 }

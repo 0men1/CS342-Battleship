@@ -52,6 +52,9 @@ public class Client extends Thread {
 
                         case SendToShipPlacement:
                             callback.accept(msg);
+
+                        case ShipPlacement:
+                            callback.accept(msg);
                     }
                 }
 

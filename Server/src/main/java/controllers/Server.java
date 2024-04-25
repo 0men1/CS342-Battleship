@@ -1,14 +1,11 @@
 package controllers;
 import gamebackend.Ship;
-import javafx.util.Pair;
 import messages.Message;
 import gamebackend.Board;
 import messages.MessageType;
-
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.foreign.MemorySegment;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
@@ -98,6 +95,7 @@ public class Server {
             this.connection = socket;
             this.count = count_;
             playerStatus = PlayerStatus.Home;
+            gameBoard = new Board(); // Init board
         }
 
         public void run() {
@@ -152,13 +150,19 @@ public class Server {
                                 break;
 
                             case ShipPlacement:
-                                Ship ship = (Ship) msg.payload.get("Ship");
+                                int shipsize = (int) msg.payload.get("Ship");
+                                boolean isVert = (boolean) msg.payload.get("Vertical");
                                 int x = (int) msg.payload.get("X");
                                 int y = (int) msg.payload.get("Y");
+                                Ship ship = new Ship(isVert, shipsize);
                                 boolean req_status = gameBoard.placeShip(ship, x, y);
+                                if (req_status) {
+                                    callback.accept(m.createLogMessage("Ship at coords: " + x + ", " + y));
+                                } else {
+                                    callback.accept(m.createLogMessage("Could not place ship at coords: " + x + ", " + y));
+                                }
                                 msg.payload.put("Request-Status", req_status);
                                 out.writeObject(msg);
-                                callback.accept(m.createLogMessage("Ship at coords: " + x + ", " + y));
                                 break;
                         }
                     }
@@ -166,6 +170,7 @@ public class Server {
                     Message m = new Message();
                     callback.accept(m.createLogMessage("Client #" + count + " closed socket"));
                     players.remove(count);
+                    e.printStackTrace();
                     break;
                 }
             }

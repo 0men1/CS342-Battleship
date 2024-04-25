@@ -35,6 +35,9 @@ public class Main extends Application {
                         case SendToShipPlacement:
                             all_scenes.get("PreGame").render();
                             break;
+                        case ShipPlacement:
+                            all_scenes.get("PreGame").handleMessage(newMsg);
+                            break;
                     }
                 }
             });

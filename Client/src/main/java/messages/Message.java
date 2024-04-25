@@ -29,12 +29,13 @@ public class Message implements Serializable {
         return this;
     }
 
-    public Message createShipPlacementMessage(Ship ship_, int x_, int y_) {
+    public Message createShipPlacementMessage(int ship_, boolean isVert, int x_, int y_) {
         msgType = MessageType.ShipPlacement;
         payload.put("Ship", ship_);
+        payload.put("Vertical", isVert);
         payload.put("X", x_);
         payload.put("Y", y_);
-        payload.put("Status", false);
+        payload.put("Request-Status", false);
         return this;
     }
 }

@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import messages.Message;
+import messages.MessageType;
 import network.Client;
 import java.util.Stack;
 
@@ -35,6 +36,7 @@ public class PreGame implements BattleshipScene{
     Button ship4 = new Button("Ship - 4");
     Button ship5 = new Button("Ship - 5");
     Ship selectedShip = null;
+    Button selectedButton = null;
     VBox shipButtonsBox = new VBox(ship1, ship2, ship3, ship4, ship5);
 
     public PreGame(Stage stage_, Client clientConnection_) {
@@ -55,10 +57,11 @@ public class PreGame implements BattleshipScene{
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 Button cell = new Button("#");
+                cells[i][j] = cell;
 
                 int finalI = i;
                 int finalJ = j;
-                cell.setOnMouseClicked(e -> onCellClick(e, finalI, finalJ));
+                cell.setOnMouseClicked(e -> onCellClick(e, finalJ, finalI));
 
                 cellGrid.add(cell, j, i);
             }
@@ -67,22 +70,27 @@ public class PreGame implements BattleshipScene{
         ship1.setOnAction(e -> {
             selectedShip = new Ship(true, 1);
             shipOnHand.setText("Ship on hand: 1");
+            selectedButton = ship1;
         });
         ship2.setOnAction(e -> {
             selectedShip = new Ship(true, 2);
             shipOnHand.setText("Ship on hand: 2");
+            selectedButton = ship2;
         });
         ship3.setOnAction(e -> {
             selectedShip = new Ship(true, 3);
             shipOnHand.setText("Ship on hand: 3");
+            selectedButton = ship3;
         });
         ship4.setOnAction(e -> {
             selectedShip = new Ship(true, 4);
             shipOnHand.setText("Ship on hand: 4");
+            selectedButton = ship4;
         });
         ship5.setOnAction(e -> {
             selectedShip = new Ship(true, 5);
             shipOnHand.setText("Ship on hand: 5");
+            selectedButton = ship5;
         });
 
 
@@ -97,6 +105,8 @@ public class PreGame implements BattleshipScene{
         if (selectedShip != null) {
             logs.setText("");
             selectedShip.isVert = e.getButton() == MouseButton.PRIMARY;
+            Message newMsg = new Message();
+            clientConnection.send(newMsg.createShipPlacementMessage(selectedShip.size, selectedShip.isVert, x_, y_));
         } else {
             logs.setText("You need to pick a ship from the left");
         }
@@ -111,9 +121,32 @@ public class PreGame implements BattleshipScene{
 
     @Override
     public void handleMessage(Message msg) {
+        boolean request_status = (boolean) msg.payload.get("Request-Status");
+        if (msg.msgType == MessageType.ShipPlacement && request_status) {
+            int x = (int) msg.payload.get("X");
+            int y = (int) msg.payload.get("Y");
+            boolean isVert = (boolean) msg.payload.get("Vertical");
+            int size = (int) msg.payload.get("Ship");
+            placeShip(size, isVert, x, y);
+            selectedButton.setDisable(true);
+        } else {
+            logs.setText("Could not place that ship there");
+        }
 
     }
 
+
+    public void placeShip(int size, boolean isVert, int x, int y) {
+        if (isVert) {
+            for (int i = y; i < (size+y); i++) {
+                cells[i][x].setText("*");
+            }
+        } else {
+            for (int i = x; i < (size+x); i++) {
+                cells[y][i].setText("*");
+            }
+        }
+    }
 
 
 }
