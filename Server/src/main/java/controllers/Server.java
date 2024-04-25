@@ -146,6 +146,7 @@ public class Server {
                                 if (opponent.playerStatus == PlayerStatus.QueueAccepted) {
                                     m.msgType = MessageType.SendToShipPlacement;
                                     out.writeObject(m);
+                                    opponent.out.writeObject(m);
                                     callback.accept(m);
                                 }
                                 break;

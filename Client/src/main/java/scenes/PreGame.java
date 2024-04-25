@@ -34,7 +34,6 @@ public class PreGame implements BattleshipScene{
     Button ship4 = new Button("Ship - 4");
     Button ship5 = new Button("Ship - 5");
     Ship selectedShip = null;
-    Button selectedButton = null;
     VBox shipButtonsBox = new VBox(ship1, ship2, ship3, ship4, ship5);
 
     public PreGame(Stage stage_, Client clientConnection_) {
@@ -80,6 +79,10 @@ public class PreGame implements BattleshipScene{
             selectedShip = new Ship(true, 5);
         });
 
+
+        PreGameBorderPane.setTop(labels);
+        PreGameBorderPane.setLeft(shipButtonsBox);
+        PreGameBorderPane.setCenter(cellGrid);
 
         PreGameScene = new Scene(PreGameBorderPane, 500, 500);
     }

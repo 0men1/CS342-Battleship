@@ -34,6 +34,7 @@ public class Main extends Application {
                             break;
                         case SendToShipPlacement:
                             all_scenes.get("PreGame").render();
+                            break;
                     }
                 }
             });
