@@ -20,8 +20,9 @@ public class PreGame implements BattleshipScene{
     GridPane cellGrid = new GridPane();
     Label leftClickLabel = new Label("Use your left click to place a ship vertically");
     Label rightClickLabel = new Label("Use your right click to place a ship horizontally");
+    Label shipOnHand = new Label("Ship on hand: ");
     Label logs = new Label("logs will show up here");
-    VBox labels = new VBox(leftClickLabel, rightClickLabel, logs);
+    VBox labels = new VBox(leftClickLabel, rightClickLabel, shipOnHand, logs);
 
     Button[][] cells = new Button[10][10];
     Client clientConnection;
@@ -65,18 +66,23 @@ public class PreGame implements BattleshipScene{
 
         ship1.setOnAction(e -> {
             selectedShip = new Ship(true, 1);
+            shipOnHand.setText("Ship on hand: 1");
         });
         ship2.setOnAction(e -> {
             selectedShip = new Ship(true, 2);
+            shipOnHand.setText("Ship on hand: 2");
         });
         ship3.setOnAction(e -> {
             selectedShip = new Ship(true, 3);
+            shipOnHand.setText("Ship on hand: 3");
         });
         ship4.setOnAction(e -> {
             selectedShip = new Ship(true, 4);
+            shipOnHand.setText("Ship on hand: 4");
         });
         ship5.setOnAction(e -> {
             selectedShip = new Ship(true, 5);
+            shipOnHand.setText("Ship on hand: 5");
         });
 
 
@@ -92,7 +98,7 @@ public class PreGame implements BattleshipScene{
             logs.setText("");
             selectedShip.isVert = e.getButton() == MouseButton.PRIMARY;
         } else {
-            logs.setText("You need to pick a ship from the left first.");
+            logs.setText("You need to pick a ship from the left");
         }
     }
 
