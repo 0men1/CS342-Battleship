@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import messages.Message;
 import messages.MessageType;
 import network.Client;
+
+import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -38,7 +40,8 @@ public class PreGame implements BattleshipScene{
     Button readyButton = new Button("Ready");
     Ship selectedShip = null;
     Button selectedButton = null;
-    VBox shipButtonsBox = new VBox(ship1, ship2, ship3, ship4, ship5);
+    ArrayList<Integer> shipsPlaced = new ArrayList<>();
+    VBox shipButtonsBox = new VBox(ship1, ship2, ship3, ship4, ship5, readyButton);
 
     public PreGame(Stage stage_, Client clientConnection_) {
         stage = stage_;
@@ -95,6 +98,8 @@ public class PreGame implements BattleshipScene{
             selectedButton = ship5;
         });
 
+
+        readyButton.setDisable(true);
 
         readyButton.setOnAction(e -> {
             Message newMsg = new Message();
@@ -156,6 +161,12 @@ public class PreGame implements BattleshipScene{
             for (int i = x; i < (size+x); i++) {
                 cells[y][i].setText("*");
             }
+        }
+
+        shipsPlaced.add(size);
+
+        if (shipsPlaced.size() == 5) {
+            readyButton.setDisable(false);
         }
     }
 

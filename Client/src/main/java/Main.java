@@ -38,6 +38,9 @@ public class Main extends Application {
                         case ShipPlacement:
                             all_scenes.get("PreGame").handleMessage(newMsg);
                             break;
+                        case StartGame:
+                            all_scenes.get("Game").render();
+                            break;
                     }
                 }
             });
