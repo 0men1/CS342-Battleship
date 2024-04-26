@@ -1,10 +1,7 @@
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicReference;
-
 import network.Client;
 import scenes.*;
 import messages.Message;

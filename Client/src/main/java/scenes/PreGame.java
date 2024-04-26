@@ -26,7 +26,6 @@ public class PreGame implements BattleshipScene{
     Label shipOnHand = new Label("Ship on hand: ");
     Label logs = new Label("logs will show up here");
     VBox labels = new VBox(leftClickLabel, rightClickLabel, shipOnHand, logs);
-
     Button[][] cells = new Button[10][10];
     Client clientConnection;
     Stage stage;
@@ -145,6 +144,8 @@ public class PreGame implements BattleshipScene{
             int size = (int) msg.payload.get("Ship");
             placeShip(size, isVert, x, y);
             selectedButton.setDisable(true);
+            selectedShip = null;
+            shipOnHand.setText("Ship on hand: ");
         } else {
             logs.setText("Could not place that ship there");
         }
