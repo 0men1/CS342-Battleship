@@ -49,13 +49,17 @@ public class Client extends Thread {
                             break;
                         case OpponentFound:
                             callback.accept(msg);
+                            break;
 
                         case SendToShipPlacement:
                             callback.accept(msg);
+                            break;
                         case ShipPlacement:
                             callback.accept(msg);
+                            break;
                         case StartGame:
                             callback.accept(msg);
+                            break;
                     }
                 }
 
