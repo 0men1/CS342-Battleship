@@ -22,7 +22,6 @@ public class Client extends Thread {
 
     public Client(Consumer<Serializable> callback_){
         callback = callback_;
-        currentScene = "Home";
     }
 
     public void run() {
@@ -40,17 +39,11 @@ public class Client extends Thread {
                     Message m = new Message();
                     switch(msg.msgType) {
                         case StartQueue:
-                            if ((boolean) msg.payload.get("Request-Status")) {
-                                currentScene = "InQueue";
-                                m.msgType = MessageType.SceneSwitch;
-                                m.payload.put("Scene", "InQueue");
-                                callback.accept(m);
-                            }
+                            callback.accept(msg);
                             break;
                         case OpponentFound:
                             callback.accept(msg);
                             break;
-
                         case SendToShipPlacement:
                             callback.accept(msg);
                             break;
@@ -67,6 +60,10 @@ public class Client extends Thread {
                 System.out.println("Error getting message");
             }
         }
+    }
+
+    public void sendToScene(String scene, Object content) {
+
     }
 
     public void send(Message msg_) {

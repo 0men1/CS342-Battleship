@@ -22,9 +22,8 @@ public class Main extends Application {
                 if (data instanceof Message) {
                     Message newMsg = (Message) data;
                     switch (newMsg.msgType) {
-                        case SceneSwitch:
-                            String sceneName = (String) newMsg.payload.get("Scene");
-                            all_scenes.get(sceneName).render();
+                        case StartQueue:
+                            all_scenes.get("InQueue").render();
                             break;
                         case OpponentFound:
                             all_scenes.get("InQueue").handleMessage(newMsg);

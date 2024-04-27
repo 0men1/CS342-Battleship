@@ -5,15 +5,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import messages.Message;
 import messages.MessageType;
 import network.Client;
-
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -41,6 +42,7 @@ public class PreGame implements BattleshipScene{
     Button selectedButton = null;
     ArrayList<Integer> shipsPlaced = new ArrayList<>();
     VBox shipButtonsBox = new VBox(ship1, ship2, ship3, ship4, ship5, readyButton);
+
 
     public PreGame(Stage stage_, Client clientConnection_) {
         stage = stage_;
@@ -149,7 +151,6 @@ public class PreGame implements BattleshipScene{
         } else {
             logs.setText("Could not place that ship there");
         }
-
     }
 
 
@@ -157,10 +158,12 @@ public class PreGame implements BattleshipScene{
         if (isVert) {
             for (int i = y; i < (size+y); i++) {
                 cells[i][x].setText("*");
+                cells[i][x].setBackground(Background.fill(Color.GREEN));
             }
         } else {
             for (int i = x; i < (size+x); i++) {
                 cells[y][i].setText("*");
+                cells[y][i].setBackground(Background.fill(Color.GREEN));
             }
         }
 
