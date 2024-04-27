@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.function.Consumer;
 
 public class Server {
@@ -168,11 +169,34 @@ public class Server {
                             case DonePlacingShips:
                                 playerStatus = PlayerStatus.DonePlacingShips;
                                 if (opponent.playerStatus == PlayerStatus.DonePlacingShips) {
+                                    Random randInt = new Random();
                                     m.msgType = MessageType.StartGame;
-                                    out.writeObject(m);
-                                    opponent.out.writeObject(m);
+                                    int rand = randInt.nextInt(2);
+                                    if (rand == 1) {
+                                        m.payload.put("Turn", true);
+                                        out.writeObject(m);
+
+                                        m.payload.put("Turn", false);
+                                        opponent.out.writeObject(m);
+                                    } else {
+                                        m.payload.put("Turn", false);
+                                        out.writeObject(m);
+
+                                        m.payload.put("Turn", true);
+                                        opponent.out.writeObject(m);
+                                    }
                                     callback.accept(m);
                                 }
+                                break;
+                            case SendShot:
+                                int sendX = (int) msg.payload.get("X");
+                                int sendY = (int) msg.payload.get("Y");
+                                boolean hit_status = gameBoard.shoot(sendX, sendY);
+                                msg.payload.put("Hit-Status", hit_status);
+                                out.writeObject(msg);
+
+                                msg.msgType = MessageType.ReceiveShot;
+                                opponent.out.writeObject(msg);
                                 break;
                         }
                     }

@@ -35,7 +35,14 @@ public class Main extends Application {
                             all_scenes.get("PreGame").handleMessage(newMsg);
                             break;
                         case StartGame:
+                            all_scenes.get("Game").handleMessage(newMsg);
                             all_scenes.get("Game").render();
+                            break;
+
+                        case SendShot:
+                        case ReceiveShot:
+                        case GridInfo:
+                            all_scenes.get("Game").handleMessage(newMsg);
                             break;
                     }
                 }

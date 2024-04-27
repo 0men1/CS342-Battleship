@@ -25,8 +25,8 @@ public class Board {
             return false;
         }
 
-        if (board[y][x] != null) {
-            board[y][x].ship.hit();
+        if (board[x][y].ship != null) {
+            board[x][y].ship.hit();
             return true;
         } else {
             return false;

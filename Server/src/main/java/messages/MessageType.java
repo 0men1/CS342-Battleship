@@ -10,5 +10,8 @@ public enum MessageType {
     SendToShipPlacement,
     SceneSwitch,
     DonePlacingShips,
-    StartGame
+    StartGame,
+    SendShot,
+    ReceiveShot,
+    GridInfo,
 }

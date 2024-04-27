@@ -16,7 +16,7 @@ public class Client extends Thread {
     Socket socketClient;
     ObjectOutputStream out;
     ObjectInputStream in;
-    private final Consumer<Serializable> callback;
+    public final Consumer<Serializable> callback;
     public HashMap<String, BattleshipScene> sceneMap;
     String currentScene;
 
@@ -39,18 +39,12 @@ public class Client extends Thread {
                     Message m = new Message();
                     switch(msg.msgType) {
                         case StartQueue:
-                            callback.accept(msg);
-                            break;
-                        case OpponentFound:
-                            callback.accept(msg);
-                            break;
-                        case SendToShipPlacement:
-                            callback.accept(msg);
-                            break;
-                        case ShipPlacement:
-                            callback.accept(msg);
-                            break;
                         case StartGame:
+                        case ShipPlacement:
+                        case SendToShipPlacement:
+                        case OpponentFound:
+                        case SendShot:
+                        case ReceiveShot:
                             callback.accept(msg);
                             break;
                     }

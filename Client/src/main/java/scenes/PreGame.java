@@ -99,15 +99,21 @@ public class PreGame implements BattleshipScene{
             selectedButton = ship5;
         });
 
-
         readyButton.setDisable(true);
 
         readyButton.setOnAction(e -> {
+
+
             Message newMsg = new Message();
             newMsg.msgType = MessageType.DonePlacingShips;
             cellGrid.setDisable(true);
             readyButton.setDisable(true);
             clientConnection.send(newMsg);
+
+            Message shipInfo = new Message();
+            shipInfo.msgType = MessageType.GridInfo;
+            shipInfo.payload.put("Grid", cells);
+            clientConnection.callback.accept(shipInfo);
         });
 
 
