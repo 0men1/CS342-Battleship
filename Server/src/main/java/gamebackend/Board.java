@@ -29,7 +29,7 @@ public class Board {
             board[x][y].ship.hit();
 
             if (board[x][y].ship.health == 0) {
-                shipDestroyed = board[x][y]
+                shipDestroyed = board[x][y].ship;
             }
 
             return true;
