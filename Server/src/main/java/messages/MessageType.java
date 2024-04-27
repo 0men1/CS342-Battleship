@@ -14,4 +14,6 @@ public enum MessageType {
     SendShot,
     ReceiveShot,
     GridInfo,
+    WinnerMessage,
+    LoserMessage,
 }

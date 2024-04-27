@@ -99,6 +99,12 @@ public class Server {
             gameBoard = new Board(); // Init board
         }
 
+        public boolean checkForWinner() {
+            if (gameBoard.checkLoser() && !opponent.gameBoard.checkLoser()) {
+                return true;
+            } else return opponent.gameBoard.checkLoser() && !gameBoard.checkLoser();
+        }
+
         public void run() {
             try{
                 out = new ObjectOutputStream(connection.getOutputStream());
@@ -193,10 +199,28 @@ public class Server {
                                 int sendY = (int) msg.payload.get("Y");
                                 boolean hit_status = opponent.gameBoard.shoot(sendX, sendY);
                                 msg.payload.put("Hit-Status", hit_status);
+                                msg.payload.put("Ship-Destroyed", opponent.gameBoard.shipDestroyed != null);
+
                                 out.writeObject(msg);
 
                                 msg.msgType = MessageType.ReceiveShot;
                                 opponent.out.writeObject(msg);
+
+                                if (checkForWinner()) {
+                                    Message winMsg = new Message();
+                                    winMsg.msgType = MessageType.WinnerMessage;
+                                    Message losMsg = new Message();
+                                    losMsg.msgType = MessageType.LoserMessage;
+
+                                    if (gameBoard.checkLoser()) {
+                                        opponent.out.writeObject(winMsg);
+                                        out.writeObject(losMsg);
+                                    } else {
+                                        out.writeObject(winMsg);
+                                        opponent.out.writeObject(losMsg);
+                                    }
+                                }
+
                                 break;
                         }
                     }

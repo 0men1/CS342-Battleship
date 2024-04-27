@@ -4,9 +4,16 @@ import java.util.ArrayList;
 public class Board {
     Cell[][] board = new Cell[10][10];
     ArrayList<Ship> ships = new ArrayList<>();
-    Ship shipDestroyed = null;
+    public Ship shipDestroyed = null;
+    public int shipsSunk = 0;
+
     public Board() {
         initializeBoard();
+    }
+
+
+    public boolean checkLoser() {
+        return shipsSunk == 5;
     }
 
     public void initializeBoard() {
@@ -20,8 +27,10 @@ public class Board {
 
     public boolean shoot(int x, int y) {
         if (x > 10 || x < 0) {
+            shipDestroyed = null;
             return false;
         } else if (y > 10 || y < 0) {
+            shipDestroyed = null;
             return false;
         }
 
@@ -30,10 +39,13 @@ public class Board {
 
             if (board[x][y].ship.health == 0) {
                 shipDestroyed = board[x][y].ship;
+                shipsSunk++;
             }
+
 
             return true;
         } else {
+            shipDestroyed = null;
             return false;
         }
     }

@@ -44,6 +44,8 @@ public class Client extends Thread {
                         case SendToShipPlacement:
                         case OpponentFound:
                         case SendShot:
+                        case WinnerMessage:
+                        case LoserMessage:
                         case ReceiveShot:
                             callback.accept(msg);
                             break;

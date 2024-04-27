@@ -69,6 +69,7 @@ public class Game implements BattleshipScene{
         fireX = x;
         fireY = y;
         coordSet = true;
+        logs.setText("Update: ");
     }
 
     @Override
@@ -83,11 +84,15 @@ public class Game implements BattleshipScene{
                 int sendX = (int) msg.payload.get("X");
                 int sendY = (int) msg.payload.get("Y");
                 boolean send_hit_status = (boolean) msg.payload.get("Hit-Status");
+                boolean send_ship_destroyed = (boolean) msg.payload.get("Ship-Destroyed");
                 if (send_hit_status) { // IF hits mark it on enemy ggriddd
                     enemyCells[sendX][sendY].setText("*");
                     enemyCells[sendX][sendY].setBackground(Background.fill(Color.RED));
                     enemyCells[sendX][sendY].setDisable(true);
                     logs.setText("Update: (" + sendX + ", " + sendY + ") was a hit!");
+                    if (send_ship_destroyed) {
+                        logs.setText("Update: An (Enemy) ship has been sunk!");
+                    }
                 } else {
                     enemyCells[sendX][sendY].setBackground(Background.fill(Color.BLUE));
                     enemyCells[sendX][sendY].setDisable(true);
@@ -95,13 +100,16 @@ public class Game implements BattleshipScene{
                     logs.setText("Update: (" + sendX + ", " + sendY + ") was a miss!");
                 }
                 break;
-
             case ReceiveShot:
                 int recX = (int) msg.payload.get("X");
                 int recY = (int) msg.payload.get("Y");
+                boolean rec_ship_destroyed = (boolean) msg.payload.get("Ship-Destroyed");
                 boolean rec_hit_status = (boolean) msg.payload.get("Hit-Status");
                 if (rec_hit_status) {
                     allyCells[recX][recY].setBackground(Background.fill(Color.RED));
+                    if (rec_ship_destroyed) {
+                        logs.setText("Update: An (Ally) ship has been sunk!");
+                    }
                 } else {
                     fireButton.setDisable(false);
                 }
@@ -114,19 +122,27 @@ public class Game implements BattleshipScene{
                         Button allyCell = allyCells[i][j];
                         Button enemyCell = new Button("#");
                         enemyCells[i][j] = enemyCell;
-
                         int finalI = i;
                         int finalJ = j;
-
                         enemyCell.setOnMouseClicked(e -> {
                             onCellClick(e, finalI, finalJ);
                         });
-
                         allyGrid.add(allyCell, j, i);
                         enemyGrid.add(enemyCell, j, i);
                     }
                 }
                 allyGrid.setDisable(true);
+                break;
+
+            case WinnerMessage:
+                enemyGrid.setDisable(true);
+                logs.setText("Update: You have sunk all of the enemy ships! Good job!");
+                fireButton.setDisable(true);
+                break;
+
+            case LoserMessage:
+                enemyGrid.setDisable(true);
+                logs.setText("Update: All of your ships have sunk! Good luck next time!");
                 break;
         }
     }

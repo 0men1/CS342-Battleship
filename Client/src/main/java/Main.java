@@ -41,6 +41,8 @@ public class Main extends Application {
 
                         case SendShot:
                         case ReceiveShot:
+                        case WinnerMessage:
+                        case LoserMessage:
                         case GridInfo:
                             all_scenes.get("Game").handleMessage(newMsg);
                             break;
