@@ -87,10 +87,12 @@ public class Game implements BattleshipScene{
                     enemyCells[sendX][sendY].setText("*");
                     enemyCells[sendX][sendY].setBackground(Background.fill(Color.RED));
                     enemyCells[sendX][sendY].setDisable(true);
+                    logs.setText("Update: (" + sendX + ", " + sendY + ") was a hit!");
                 } else {
                     enemyCells[sendX][sendY].setBackground(Background.fill(Color.BLUE));
                     enemyCells[sendX][sendY].setDisable(true);
                     fireButton.setDisable(true);
+                    logs.setText("Update: (" + sendX + ", " + sendY + ") was a miss!");
                 }
                 break;
 

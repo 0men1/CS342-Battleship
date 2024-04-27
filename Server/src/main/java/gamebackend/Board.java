@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Board {
     Cell[][] board = new Cell[10][10];
     ArrayList<Ship> ships = new ArrayList<>();
-
+    Ship shipDestroyed = null;
     public Board() {
         initializeBoard();
     }
@@ -27,6 +27,11 @@ public class Board {
 
         if (board[x][y].ship != null) {
             board[x][y].ship.hit();
+
+            if (board[x][y].ship.health == 0) {
+                shipDestroyed = board[x][y]
+            }
+
             return true;
         } else {
             return false;
