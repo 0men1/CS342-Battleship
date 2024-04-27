@@ -52,11 +52,11 @@ public class Board {
         } else {
             if (canPlaceShip(ship, x, y)) {
                 if (ship.isVert) {
-                    for (int i = y; i < ((ship.size-1) + y); i++) {
+                    for (int i = y; i < (ship.size + y); i++) {
                         board[i][x].ship = ship;
                     }
                 } else {
-                    for (int i = x; i < ((ship.size-1) + x); i++) {
+                    for (int i = x; i < (ship.size + x); i++) {
                         board[y][i].ship = ship;
                     }
                 }

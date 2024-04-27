@@ -191,7 +191,7 @@ public class Server {
                             case SendShot:
                                 int sendX = (int) msg.payload.get("X");
                                 int sendY = (int) msg.payload.get("Y");
-                                boolean hit_status = gameBoard.shoot(sendX, sendY);
+                                boolean hit_status = opponent.gameBoard.shoot(sendX, sendY);
                                 msg.payload.put("Hit-Status", hit_status);
                                 out.writeObject(msg);
 
