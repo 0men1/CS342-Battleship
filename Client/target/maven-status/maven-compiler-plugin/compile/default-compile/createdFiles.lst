@@ -12,4 +12,3 @@ scenes/BattleshipScene.class
 messages/Message.class
 messages/MessageType.class
 network/Client$1.class
-messages/GameStatus.class

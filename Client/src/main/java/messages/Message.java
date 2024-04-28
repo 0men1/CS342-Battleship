@@ -1,7 +1,5 @@
 package messages;
 
-import gamebackend.Ship;
-
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -14,18 +12,6 @@ public class Message implements Serializable {
     public Message createLogMessage(String msg) {
         msgType = MessageType.Log;
         payload.put("Content", msg);
-        return this;
-    }
-
-    public Message createSceneSwitchMessage(String scene) {
-        msgType = MessageType.SceneSwitch;
-        payload.put("Scene", scene);
-        return this;
-    }
-
-    public Message createStatusMessage(GameStatus status) {
-        msgType = MessageType.GameStatusUpdate;
-        payload.put("Status", status);
         return this;
     }
 
